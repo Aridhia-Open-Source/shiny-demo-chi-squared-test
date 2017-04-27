@@ -1,5 +1,9 @@
-library(shiny)
-library(shinyAce)
+xap.require(
+  "shiny",
+  "shinyAce",
+  "pwr",
+  "vcd"
+)
 
 
 shinyUI(bootstrapPage(
