@@ -7,7 +7,7 @@ server <- function(input, output, session) {
   
   data1 <- reactive({
     
-    dat <- read.csv(text=input$text1, sep="", na.strings=c("","NA","."))
+    dat <- read.csv(text = input$text1, sep="", na.strings=c("", "NA", "."))
     
     x <- table(dat)
     n <- sum(x)
