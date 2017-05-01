@@ -38,6 +38,19 @@ server <- function(input, output, session) {
     
     cat("\n", "---", "\n", "Multiple comparisons (p-value adjusted with Bonferroni method):", "\n", "\n")
     
+    effect_size <- function(a, b) {
+      n <- a + b
+      z <- (abs(a - b) - 1) / sqrt(n)
+      p <- pnorm(z, lower.tail = FALSE) * 2
+      p <- p.adjust(p, method = "bonferroni", n = length(x))
+      p00 <- c(0.5, 0.5)
+      p11 <- c(a, b) / n
+      p0 <- p00[1]
+      p1 <- p11[1]
+      ESg <- p1 - p0
+      return(c(round(z, 3), round(p, 3), round(ESg, 3)))
+    }
+    
     itemNum <- 0
     for (i in 1:length(chi$observed)) {
       for (j in 1:length(chi$observed)) {
@@ -61,12 +74,7 @@ server <- function(input, output, session) {
     test1()
   })
   
-  makepPlot1 <- function(){
-    #dat <- read.csv(text=input$text1, sep="", na.strings=c("","NA","."))
-    dat <- d1()
-    
-    x <- table(dat)
-    
+  pplot <- function(x) {
     P0 <- rep(1/length(x), times = length(x))  # Expected ratio
     P1 <- x/sum(x)                             # Observed ratio
     
@@ -77,15 +85,16 @@ server <- function(input, output, session) {
     barplot(t(z), hor=1, las=1, xlab="Percentage", col=gray.colors(length(x)))
     
     legend("bottomright",legend=colnames(z), fill=gray.colors(length(x)))
-    
   }
   
   output$pPlot1 <- renderPlot({
-    print(makepPlot1())
+    #print(makepPlot1())
+    dat <- d1()
+    x <- table(dat)
+    pplot(x)
   })
  
   callModule(printSessionInfo, "info1")
-  
   
   #----------------------------------------------------
   # 2. Test of goodness of fit (Tabulated data)
@@ -147,26 +156,10 @@ server <- function(input, output, session) {
     test2()
   })
   
-  makepPlot2 <- function(){
-    dat <- d2()
-    #dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
-    
-    x <- dat
-    
-    P0 <- rep(1/length(x), times = length(x))  # ????????????
-    P1 <- x/sum(x)               # ????????????
-    
-    par(mar=c(5,6,2,4))
-    z <- matrix(c(P0, P1), nc=length(x), by=1)
-    colnames(z) <- names(x)
-    rownames(z) <- c("Expected", "Observed")
-    barplot(t(z), hor=1, las=1, xlab="Percentage", col=gray.colors(length(x)))
-    
-    legend("bottomright",legend=colnames(z), fill=gray.colors(length(x)))
-  }
-  
   output$pPlot2 <- renderPlot({
-    print(makepPlot2())
+    #print(makepPlot2())
+    dat <- d2()
+    pplot(dat)
   })
   
   callModule(printSessionInfo, "info2")
