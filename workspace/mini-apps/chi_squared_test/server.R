@@ -4,10 +4,11 @@ server <- function(input, output, session) {
   #----------------------------------------------------
   # 1. Test of goodness of fit (Raw data)
   #----------------------------------------------------
+  d1 <- callModule(aceReadCsv, "gof_raw")
   
   data1 <- reactive({
-    
-    dat <- read.csv(text = input$text1, sep="", na.strings=c("", "NA", "."))
+    #dat <- read.csv(text = input$text1, sep="", na.strings=c("", "NA", "."))
+    dat <- d1()
     
     x <- table(dat)
     n <- sum(x)
@@ -21,9 +22,8 @@ server <- function(input, output, session) {
   })
   
   test1 <- reactive({
-    
-    dat <- read.csv(text=input$text1, sep="", na.strings=c("","NA","."))
-    
+    #dat <- read.csv(text=input$text1, sep="", na.strings=c("","NA","."))
+    dat <- d1()
     
     x <- table(dat)
     chi <- chisq.test(x)
@@ -62,8 +62,8 @@ server <- function(input, output, session) {
   })
   
   makepPlot1 <- function(){
-    
-    dat <- read.csv(text=input$text1, sep="", na.strings=c("","NA","."))
+    #dat <- read.csv(text=input$text1, sep="", na.strings=c("","NA","."))
+    dat <- d1()
     
     x <- table(dat)
     
@@ -83,26 +83,18 @@ server <- function(input, output, session) {
   output$pPlot1 <- renderPlot({
     print(makepPlot1())
   })
-  
-  info1 <- reactive({
-    info1 <- paste("This analysis was conducted with ", strsplit(R.version$version.string, " \\(")[[1]][1], ".", sep = "")
-    info2 <- paste("It was executed on ", date(), ".", sep = "")
-    cat(sprintf(info1), "\n")
-    cat(sprintf(info2), "\n")
-  })
-  
-  output$info1.out <- renderPrint({
-    info1()
-  })
+ 
+  callModule(printSessionInfo, "info1")
   
   
   #----------------------------------------------------
   # 2. Test of goodness of fit (Tabulated data)
   #----------------------------------------------------
+  d2 <- callModule(aceReadCsv, "gof_tab")
   
   data2 <- reactive({
-    
-    dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
+    dat <- d2()
+    #dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
     
     n <- sum(dat)
     x <- data.frame(dat, Sum = n)
@@ -115,13 +107,9 @@ server <- function(input, output, session) {
     data2()
   })
   
-  
-  
-  
-  
   test2 <- reactive({
-    
-    dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
+    dat <- d2()
+    #dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
     
     x <- dat
     chi <- chisq.test(x)
@@ -159,13 +147,9 @@ server <- function(input, output, session) {
     test2()
   })
   
-  
-  
-  
-  
   makepPlot2 <- function(){
-    
-    dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
+    dat <- d2()
+    #dat <- read.csv(text=input$text2, sep="", na.strings=c("","NA","."))
     
     x <- dat
     
@@ -185,28 +169,7 @@ server <- function(input, output, session) {
     print(makepPlot2())
   })
   
-  
-  
-  
-  
-  info2 <- reactive({
-    info1 <- paste("This analysis was conducted with ", strsplit(R.version$version.string, " \\(")[[1]][1], ".", sep = "")
-    info2 <- paste("It was executed on ", date(), ".", sep = "")
-    cat(sprintf(info1), "\n")
-    cat(sprintf(info2), "\n")
-  })
-  
-  output$info2.out <- renderPrint({
-    info2()
-  })
-  
-  
-  
-  
-  
-  
-  
-  
+  callModule(printSessionInfo, "info2")
   
   
   #----------------------------------------------------
@@ -226,10 +189,6 @@ server <- function(input, output, session) {
   output$data3.out <- renderPrint({
     data3()
   })
-  
-  
-  
-  
   
   test3 <- reactive({
     
@@ -551,28 +510,7 @@ server <- function(input, output, session) {
     print(makemPlot3())
   })
   
-  
-  
-  
-  
-  info3 <- reactive({
-    info1 <- paste("This analysis was conducted with ", strsplit(R.version$version.string, " \\(")[[1]][1], ".", sep = "")
-    info2 <- paste("It was executed on ", date(), ".", sep = "")
-    cat(sprintf(info1), "\n")
-    cat(sprintf(info2), "\n")
-  })
-  
-  output$info3.out <- renderPrint({
-    info3()
-  })
-  
-  
-  
-  
-  
-  
-  
-  
+  callModule(printSessionInfo, "info3")
   
   
   #----------------------------------------------------
@@ -922,20 +860,7 @@ server <- function(input, output, session) {
     print(makemPlot4())
   })
   
-  
-  
-  
-  
-  info4 <- reactive({
-    info1 <- paste("This analysis was conducted with ", strsplit(R.version$version.string, " \\(")[[1]][1], ".", sep = "")
-    info2 <- paste("It was executed on ", date(), ".", sep = "")
-    cat(sprintf(info1), "\n")
-    cat(sprintf(info2), "\n")
-  })
-  
-  output$info4.out <- renderPrint({
-    info4()
-  })
+  callModule(printSessionInfo, "info4")
   
 }
 

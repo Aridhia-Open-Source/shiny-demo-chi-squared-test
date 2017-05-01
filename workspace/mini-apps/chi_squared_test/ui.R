@@ -8,9 +8,7 @@ xap.require(
 
 shinyUI(bootstrapPage(
   
-  
   headerPanel("Chi-square Test"),
-  
   
   ########## Adding loading message #########
   
@@ -39,188 +37,100 @@ shinyUI(bootstrapPage(
   
   mainPanel(
     tabsetPanel(position = "left", selected = "Test of Independence (Tabulated data)",
-                
                 tabPanel("Test of goodness of fit (Raw data)",
-                         
                          h2("Test of goodness of fit (Raw data)"),
-                         
                          h4("One nominal variable"),
-                         
-                         p('Note: Input values must be separated by tabs. Copy and paste from Excel/Numbers.'),
-                         
-                         p(HTML("<b><div style='background-color:#FADDF2;border:1px solid black;'>Your data needs to have the header (variable names) in the first row. Missing values should be indicated by a period (.) or NA.</div></b>")),
-                         
-                         aceEditor("text1", value="L1\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese", mode="r", theme="cobalt"),
-                         
+                         #p('Note: Input values must be separated by tabs. Copy and paste from Excel/Numbers.'),
+                         #p(HTML("<b><div style='background-color:#FADDF2;border:1px solid black;'>Your data needs to have the header (variable names) in the first row. Missing values should be indicated by a period (.) or NA.</div></b>")),
+                         #aceEditor("text1", value="L1\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese", mode="r", theme="cobalt"),
+                         aceReadCsvUI("gof_raw", paste0("L1\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\n",
+                                      "Japanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\n",
+                                      "Japanese\nJapanese\nJapanese\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\n",
+                                      "Thai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\nThai\n",
+                                      "Thai\nThai\nThai\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\n",
+                                      "Chinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\n",
+                                      "Chinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\n",
+                                      "Chinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\n",
+                                      "Chinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\n",
+                                      "Chinese\nChinese\nChinese\nChinese\nChinese")),
                          br(),
-                         
                          h3("Contingency table"),
                          verbatimTextOutput("data1.out"),
-                         
                          br(),
-                         
                          h3("Test result"),
                          verbatimTextOutput("test1.out"),
-                         
                          br(),
-                         
                          h3("Plot"),
-                         
                          plotOutput("pPlot1"),
-                         
                          br(),
                          br(),
-                         
-                         strong('R session info'),
-                         verbatimTextOutput("info1.out")
+                         printSessionInfoUI("info1")
                 ),
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 tabPanel("Test of goodness of fit (Tabulated data)",
-                         
                          h2("Test of goodness of fit (Tabulated data)"),
-                         
                          h4("One nominal variable"),
-                         
-                         p('Note: Input values must be separated by tabs. Copy and paste from Excel/Numbers.'),
-                         
-                         p(HTML("<b><div style='background-color:#FADDF2;border:1px solid black;'>Your data needs to have the header (variable names) in the first row. Missing values should be indicated by a period (.) or NA.</div></b>")),
-                         
-                         aceEditor("text2", value="Japanese\tThai\tChinese\n18\t24\t48", mode="r", theme="cobalt"),
-                         
+                         #p('Note: Input values must be separated by tabs. Copy and paste from Excel/Numbers.'),
+                         #p(HTML("<b><div style='background-color:#FADDF2;border:1px solid black;'>Your data needs to have the header (variable names) in the first row. Missing values should be indicated by a period (.) or NA.</div></b>")),
+                         #aceEditor("text2", value="Japanese\tThai\tChinese\n18\t24\t48", mode="r", theme="cobalt"),
+                         aceReadCsvUI("gof_tab", placeholder = "Japanese,Thai,Chinese\n18,24,48"),
                          br(),
-                         
                          h3("Contingency table"),
                          verbatimTextOutput("data2.out"),
-                         
                          br(),
-                         
                          h3("Test result"),
                          verbatimTextOutput("test2.out"),
-                         
                          br(),
-                         
                          h3("Plot"),
-                         
                          plotOutput("pPlot2"),
-                         
                          br(),
                          br(),
-                         
-                         strong('R session info'),
-                         verbatimTextOutput("info2.out")
+                         printSessionInfoUI("info2")
                 ),
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 tabPanel("Test of Independence (Raw data)",
-                         
                          h2("Test of Independence (Raw data)"),
-                         
                          h4("Two or more than two nominal variables"),
-                         
                          p('Note: Input values must be separated by tabs. Copy and paste from Excel/Numbers.'),
-                         
                          p(HTML("<b><div style='background-color:#FADDF2;border:1px solid black;'>Your data needs to have the header (variable names) in the first row. Missing values should be indicated by a period (.) or NA.</div></b>")),
-                         
                          aceEditor("text3", value="Sex\tEffect\nM\tNo\nW\tNo\nW\tNo\nM\tNo\nM\tYes\nM\tYes\nM\tYes\nM\tNo\nW\tYes\nM\tNo\nW\tYes\nM\tNo\nM\tYes\nM\tNo\nM\tNo\nM\tYes\nW\tYes\nW\tYes\nW\tYes\nW\tYes\nW\tYes\nM\tYes\nM\tNo\nM\tNo\nM\tYes\nM\tYes\nW\tYes\nM\tNo\nM\tYes\nW\tYes\nM\tNo\nM\tNo\nW\tYes\nW\tYes\nW\tYes\nW\tYes\nM\tNo\nW\tNo\nW\tYes\nM\tYes\nW\tYes\nM\tNo\nM\tYes\nW\tYes\nM\tYes\nW\tYes\nM\tYes\nM\tNo\nM\tNo\nW\tNo\nW\tNo\nM\tYes\nW\tNo\nM\tYes\nW\tYes\nW\tYes\nM\tNo\nM\tNo\nM\tYes\nW\tYes\nM\tNo\nW\tYes\nW\tYes\nM\tYes\nW\tNo\nW\tYes\nM\tNo\nW\tYes\nW\tNo\nM\tYes",mode="r", theme="cobalt"),
-                         
                          br(),
-                         
                          h3("Contingency table"),
                          verbatimTextOutput("data3.out"),
-                         
                          br(),
-                         
                          h3("Test result"),
                          verbatimTextOutput("test3.out"),
-                         
                          br(),
-                         
                          h3("Plot"),
-                         
                          plotOutput("pPlot3"),
-                         
                          br(),
-                         
                          plotOutput("mPlot3", height = "550px"),
-                         
                          br(),
                          br(),
-                         
-                         strong('R session info'),
-                         verbatimTextOutput("info3.out")
+                         printSessionInfoUI("info3")
                 ),
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 tabPanel("Test of Independence (Tabulated data)",
-                         
                          h2("Test of Independence (Tabulated data)"),
-                         
                          h4("Two or more than two nominal variables"),
-                         
                          p('Note: Input values must be separated by tabs. Copy and paste from Excel/Numbers.'),
-                         
                          p(HTML("<b><div style='background-color:#FADDF2;border:1px solid black;'>Your data needs to have the header (variable names) in the first row. Missing values should be indicated by a period (.) or NA.</div></b>")),
-                         
                          aceEditor("text4", value="\tNo\tYes\nM\t20\t18\nW\t8\t24", mode="r", theme="cobalt"),
-                         
                          br(),
-                         
                          h3("Contingency table"),
                          verbatimTextOutput("data4.out"),
-                         
                          br(),
-                         
                          h3("Test result"),
                          verbatimTextOutput("test4.out"),
-                         
                          br(),
-                         
                          h3("Plot"),
-                         
                          plotOutput("pPlot4"),
-                         
                          br(),
-                         
                          plotOutput("mPlot4", height = "550px"),
-                         
                          br(),
                          br(),
-                         
-                         strong('R session info'),
-                         verbatimTextOutput("info4.out")
+                         printSessionInfoUI("info4")
                 ),
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 tabPanel("About",
                          
