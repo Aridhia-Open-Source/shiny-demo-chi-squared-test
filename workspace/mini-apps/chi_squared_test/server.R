@@ -1,4 +1,33 @@
 
+effect_size <- function(a, b) {
+  n <- a + b
+  z <- (abs(a - b) - 1) / sqrt(n)
+  p <- pnorm(z, lower.tail = FALSE) * 2
+  p <- p.adjust(p, method = "bonferroni", n = length(x))
+  p00 <- c(0.5, 0.5)
+  p11 <- c(a, b) / n
+  p0 <- p00[1]
+  p1 <- p11[1]
+  ESg <- p1 - p0
+  return(list("z" = round(z, 3), "p" = round(p, 3), "ESg" = round(ESg, 3)))
+}
+
+pplot <- function(x, expected = NULL) {
+  if(is.null(expected)) {
+    P0 <- rep(1 / length(x), times = length(x))  # Expected ratio
+  } else {
+    P0 <- expected / sum(expected)
+  }
+  P1 <- x / sum(x)                               # Observed ratio
+  
+  par(mar = c(5,6,2,4))
+  z <- matrix(c(P0, P1), nc = length(x), by = 1)
+  colnames(z) <- names(x)
+  rownames(z) <- c("Expected", "Observed")
+  barplot(t(z), hor = 1, las = 1, xlab = "Percentage", col = gray.colors(length(x)))
+  
+  legend("bottomright",legend = colnames(z), fill = gray.colors(length(x)))
+}
 
 server <- function(input, output, session) {
   #----------------------------------------------------
@@ -35,37 +64,16 @@ server <- function(input, output, session) {
     
     cat("Effect size w =", round(w, 3), "\n")
     
-    
     cat("\n", "---", "\n", "Multiple comparisons (p-value adjusted with Bonferroni method):", "\n", "\n")
     
-    effect_size <- function(a, b) {
-      n <- a + b
-      z <- (abs(a - b) - 1) / sqrt(n)
-      p <- pnorm(z, lower.tail = FALSE) * 2
-      p <- p.adjust(p, method = "bonferroni", n = length(x))
-      p00 <- c(0.5, 0.5)
-      p11 <- c(a, b) / n
-      p0 <- p00[1]
-      p1 <- p11[1]
-      ESg <- p1 - p0
-      return(c(round(z, 3), round(p, 3), round(ESg, 3)))
-    }
-    
-    itemNum <- 0
     for (i in 1:length(chi$observed)) {
       for (j in 1:length(chi$observed)) {
         if (i <= j) {next}
-        z <- (abs(chi$observed[[i]]-chi$observed[[j]])-1)/sqrt(chi$observed[[i]]+chi$observed[[j]])
-        p <- pnorm(z, lower.tail=FALSE)*2
-        p <- p.adjust(p, method = "bonferroni", n = length(x))
-        n <- chi$observed[[i]] + chi$observed[[j]]
-        p00 <- c(0.5, 0.5) # ???????????????
-        p11 <- c(chi$observed[[i]]/n, chi$observed[[j]]/n) # ????????????
-        p0  <- p00[1]
-        p1  <- p11[1]
-        ESg <- p1-p0 # ?????????g
-        cat(names(x)[j],"vs",names(x)[i],":", "z =", sprintf("%.3f",round(z,3)), ",", "p =", sprintf("%.3f",round(p,3)), ",", "Effect size g =", round(ESg,3), "\n")
-        itemNum <- itemNum + 1
+        a <- effect_size(chi$observed[[i]], chi$observed[[j]])
+        cat(names(x)[j], "vs", names(x)[i], ":", "z =", sprintf("%.3f", a$z), ",",
+            "p =", sprintf("%.3f", a$p),
+            ",", "Effect size g =", a$ESg, "\n"
+        )
       }
     }
   })
@@ -74,21 +82,7 @@ server <- function(input, output, session) {
     test1()
   })
   
-  pplot <- function(x) {
-    P0 <- rep(1/length(x), times = length(x))  # Expected ratio
-    P1 <- x/sum(x)                             # Observed ratio
-    
-    par(mar=c(5,6,2,4))
-    z <- matrix(c(P0, P1), nc=length(x), by=1)
-    colnames(z) <- names(x)
-    rownames(z) <- c("Expected", "Observed")
-    barplot(t(z), hor=1, las=1, xlab="Percentage", col=gray.colors(length(x)))
-    
-    legend("bottomright",legend=colnames(z), fill=gray.colors(length(x)))
-  }
-  
   output$pPlot1 <- renderPlot({
-    #print(makepPlot1())
     dat <- d1()
     x <- table(dat)
     pplot(x)
@@ -130,24 +124,16 @@ server <- function(input, output, session) {
     
     cat("Effect size w =", round(w, 3), "\n")
     
-    
     cat("\n", "---", "\n", "Multiple comparisons (p-value adjusted with Bonferroni method):", "\n", "\n")
     
-    itemNum <- 0
     for (i in 1:length(chi$observed)) {
       for (j in 1:length(chi$observed)) {
         if (i <= j) {next}
-        z <- (abs(chi$observed[[i]]-chi$observed[[j]])-1)/sqrt(chi$observed[[i]]+chi$observed[[j]])
-        p <- pnorm(z, lower.tail=FALSE)*2
-        p <- p.adjust(p, method = "bonferroni", n = length(x))
-        n <- chi$observed[[i]] + chi$observed[[j]]
-        p00 <- c(0.5, 0.5) # ???????????????
-        p11 <- c(chi$observed[[i]]/n, chi$observed[[j]]/n) # ????????????
-        p0  <- p00[1]
-        p1  <- p11[1]
-        ESg <- p1-p0 # ?????????g
-        cat(names(x)[j],"vs",names(x)[i],":", "z =", sprintf("%.3f",round(z,3)), ",", "p =", sprintf("%.3f",round(p,3)), ",", "Effect size g =", round(ESg,3), "\n")
-        itemNum <- itemNum + 1
+        a <- effect_size(chi$observed[[i]], chi$observed[[j]])
+        cat(names(x)[j], "vs", names(x)[i], ":", "z =", sprintf("%.3f", a$z), ",",
+            "p =", sprintf("%.3f", a$p),
+            ",", "Effect size g =", a$ESg, "\n"
+        )
       }
     }
   })
@@ -157,13 +143,11 @@ server <- function(input, output, session) {
   })
   
   output$pPlot2 <- renderPlot({
-    #print(makepPlot2())
     dat <- d2()
     pplot(dat)
   })
   
   callModule(printSessionInfo, "info2")
-  
   
   #----------------------------------------------------
   # 3. Test of Independence (Raw data)
@@ -432,10 +416,6 @@ server <- function(input, output, session) {
   output$test3.out <- renderPrint({
     test3()
   })
-  
-  
-  
-  
   
   makepPlot3 <- function(){
     
