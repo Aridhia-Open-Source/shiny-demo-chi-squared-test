@@ -5,6 +5,9 @@ xap.require(
   "vcd"
 )
 
+source("aceReadCsv.R")
+source("goodnessOfFitTest.R")
+source("printSessionInfo.R")
 
 shinyUI(bootstrapPage(
   
@@ -54,16 +57,17 @@ shinyUI(bootstrapPage(
                                       "Chinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\nChinese\n",
                                       "Chinese\nChinese\nChinese\nChinese\nChinese")),
                          br(),
-                         h3("Contingency table"),
-                         verbatimTextOutput("data1.out"),
-                         br(),
-                         h3("Test result"),
-                         verbatimTextOutput("test1.out"),
-                         br(),
-                         h3("Plot"),
-                         plotOutput("pPlot1"),
-                         br(),
-                         br(),
+                         goodnessOfFitTestUI("gof_test_raw"),
+                         # h3("Contingency table"),
+                         # verbatimTextOutput("data1.out"),
+                         # br(),
+                         # h3("Test result"),
+                         # verbatimTextOutput("test1.out"),
+                         # br(),
+                         # h3("Plot"),
+                         # plotOutput("pPlot1"),
+                         # br(),
+                         # br(),
                          printSessionInfoUI("info1")
                 ),
                 
@@ -75,16 +79,17 @@ shinyUI(bootstrapPage(
                          #aceEditor("text2", value="Japanese\tThai\tChinese\n18\t24\t48", mode="r", theme="cobalt"),
                          aceReadCsvUI("gof_tab", placeholder = "Japanese,Thai,Chinese\n18,24,48"),
                          br(),
-                         h3("Contingency table"),
-                         verbatimTextOutput("data2.out"),
-                         br(),
-                         h3("Test result"),
-                         verbatimTextOutput("test2.out"),
-                         br(),
-                         h3("Plot"),
-                         plotOutput("pPlot2"),
-                         br(),
-                         br(),
+                         goodnessOfFitTestUI("gof_test_tab"),
+                         # h3("Contingency table"),
+                         # verbatimTextOutput("data2.out"),
+                         # br(),
+                         # h3("Test result"),
+                         # verbatimTextOutput("test2.out"),
+                         # br(),
+                         # h3("Plot"),
+                         # plotOutput("pPlot2"),
+                         # br(),
+                         # br(),
                          printSessionInfoUI("info2")
                 ),
                 

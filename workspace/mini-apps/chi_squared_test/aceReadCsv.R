@@ -8,7 +8,7 @@ aceReadCsvUI <- function(id, placeholder = "\n") {
     p("Note: Data must have a header row (column names) and values must be separated by commas (,).
       Empty values and the string NA will be interpreted as NA"),
     aceEditor(ns("text"), value = placeholder,
-              mode = "text", theme = "cobalt")
+              mode = "r", theme = "cobalt")
   )
 }
 
