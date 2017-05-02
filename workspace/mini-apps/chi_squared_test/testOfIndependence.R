@@ -38,26 +38,68 @@ try_fishers_exact_test <- function(m) {
   return(dd)
 }
 
-print_cramers <- function(m) {
-  V <- sqrt(chisq.test(m, correct=F)$statistic[[1]] / 
+cramers_ci <- function(m, ci = 0.95) {
+  V <- sqrt(chisq.test(m, correct = FALSE)$statistic[[1]] / 
               (sum(m) * (min(nrow(m), ncol(m) - 1))))
   fisherZ <- 0.5 * log((1 + V) / (1 - V))
-  fisherZ.se <- 1 / sqrt(sum(m) - 3) * qnorm(1 - ((1 - 0.95) / 2))
+  fisherZ.se <- 1 / sqrt(sum(m) - 3) * qnorm(1 - ((1 - ci) / 2))
   fisherZ.ci <- fisherZ + c(-fisherZ.se, fisherZ.se)
-  ci.V <- (exp(2 * fisherZ.ci) - 1)/(1 + exp(2 * fisherZ.ci))
-  
-  cat("\n", "Cramer's V [95%CI] =", V, "[", ci.V[1], ",",ci.V[2],"]", "\n")
+  ci.V <- (exp(2 * fisherZ.ci) - 1) / (1 + exp(2 * fisherZ.ci))
+  return(c(ci.V[1], V, ci.V[2]))
+}
+
+print_cramers <- function(m) {
+  cv <- cramers_ci(m, 0.95)
+  cat("\n", "Cramer's V [95%CI] =", cv[2], "[", cv[1], ",", cv[3], "]", "\n")
+}
+
+odds_ratio <- function(x, ci = 0.95) {
+  if(ncol(x) != 2 || nrow(x) != 2) return()
+  oddsrt <- (x[1, 1] / x[1, 2]) / (x[2, 1] / x[2, 2])
+  oddsrt.log <- log((x[1, 1] / x[1, 2]) / (x[2, 1] / x[2, 2]))
+  oddsrt.log.var <- sum(x^(-1))
+  p <- (1 - ci) / 2
+  ci.lwrupr <- exp(oddsrt.log + qnorm(c(p, 1 - p)) * sqrt(oddsrt.log.var))
+  return(c(ci.lwrupr[1], oddsrt, ci.lwrupr[2]))
 }
 
 print_odds_ratio <- function(x) {
-  if(ncol(x) != 2 || nrow(x) != 2) return()
-  oddsrt <- (x[1,1]/x[1,2]) / (x[2,1]/x[2,2])
-  oddsrt.log <- log((x[1,1]/x[1,2]) / (x[2,1]/x[2,2]))
-  oddsrt.log.var <- 1/x[1,1] + 1/x[1,2] + 1/x[2,1] + 1/x[2,2]
-  ci.lwrupr <- exp(oddsrt.log + qnorm(c(0.025,0.975)) * sqrt(oddsrt.log.var))
-  cat("\n", "Odds Ratio [95%CI] =", oddsrt, "[", ci.lwrupr[1], ",",ci.lwrupr[2],"]", "\n")
+  or <- odds_ratio(x)
+  cat("\n", "Odds Ratio [95%CI] =", or[2], "[", or[1], ",", or[3], "]", "\n")
 }
 
+comparison <- function(x) {
+  if(nrow(x) != 2) {
+    return()
+  }
+  comp <- paste(rownames(x)[1], "vs", rownames(x)[2])
+  chi <- chisq.test(x, correct = FALSE)
+  cv <- round(cramers_ci(x), 4)
+  fisherp <- fisher.test(x)$p.value
+  
+  data.frame(
+    Comparison = comp,
+    X.2 = chi$statistic,
+    df = chi$parameter,
+    p = p.adjust(chi$p.value, "bonferroni"),
+    Fisher.p = p.adjust(fisherp, "bonferroni"),
+    Cramers.V = cv[2],
+    lwr.V = cv[1],
+    upr.V = cv[3]
+  )
+}
+
+all_comparisons <- function(x) {
+  r <- row.names(x)
+  l <- combn(r, 2, simplify = FALSE)
+  comparisons <- lapply(l, function(a) {
+    m <- x[a, ]
+    return(comparison(m))
+  })
+  df <- do.call(rbind, comparisons)
+  row.names(df) <- NULL
+  return(df)
+}
 
 testOfIndependenceUI <- function(id) {
   ns <- NS(id)
@@ -120,7 +162,11 @@ testOfIndependence <- function(input, output, session, m) {
     cat("\n", "------------------------------------------------------", "\n",
         "Effect size:", "\n")
     print_cramers(m())
-    print_odds_ratio(m())
+    
+    if(nrow(m()) == 2 && ncol(m()) == 2) {
+      print_odds_ratio(m())
+    }
+    
     cat("\n", "\n", "------------------------------------------------------", "\n", "Residual analysis:", "\n")
     chi <- yates_chi()
     
@@ -135,6 +181,13 @@ testOfIndependence <- function(input, output, session, m) {
     
     cat("\n", "[p-values of adjusted standardized residuals (two-tailed)]", "\n")
     print(round(2 * (1 - pnorm(abs(chi$residuals / sqrt(outer(1 - rowSums(m())/sum(m()), 1 - colSums(m())/sum(m())))))),3))
+    
+    if(nrow(m()) > 2) {
+      cat("\n", "\n", "------------------------------------------------------",
+          "\n", "Multiple comparisons (p-value adjusted with Bonferroni method):",
+          "\n", "\n")
+      print(all_comparisons(m()))
+    }
   })
   
   output$pplot <- renderPlot({
