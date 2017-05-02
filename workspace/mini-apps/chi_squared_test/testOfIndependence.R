@@ -40,7 +40,7 @@ try_fishers_exact_test <- function(m) {
 
 cramers_ci <- function(m, ci = 0.95) {
   V <- sqrt(chisq.test(m, correct = FALSE)$statistic[[1]] / 
-              (sum(m) * (min(nrow(m), ncol(m) - 1))))
+              (sum(m) * (min(nrow(m), ncol(m)) - 1)))
   fisherZ <- 0.5 * log((1 + V) / (1 - V))
   fisherZ.se <- 1 / sqrt(sum(m) - 3) * qnorm(1 - ((1 - ci) / 2))
   fisherZ.ci <- fisherZ + c(-fisherZ.se, fisherZ.se)
@@ -79,10 +79,10 @@ comparison <- function(x) {
   
   data.frame(
     Comparison = comp,
-    X.2 = chi$statistic,
+    X.2 = round(chi$statistic, 4),
     df = chi$parameter,
-    p = p.adjust(chi$p.value, "bonferroni"),
-    Fisher.p = p.adjust(fisherp, "bonferroni"),
+    p = chi$p.value,
+    Fisher.p = fisherp,
     Cramers.V = cv[2],
     lwr.V = cv[1],
     upr.V = cv[3]
@@ -98,6 +98,8 @@ all_comparisons <- function(x) {
   })
   df <- do.call(rbind, comparisons)
   row.names(df) <- NULL
+  df$p <- round(p.adjust(df$p, method = "bonferroni"), 4)
+  df$Fisher.p <- round(p.adjust(df$Fisher.p, method = "bonferroni"), 4)
   return(df)
 }
 
