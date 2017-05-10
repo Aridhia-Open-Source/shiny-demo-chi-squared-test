@@ -1,10 +1,10 @@
 
 
-effect_size <- function(a, b) {
+effect_size <- function(a, b, N) {
   n <- a + b
   z <- (abs(a - b) - 1) / sqrt(n)
   p <- pnorm(z, lower.tail = FALSE) * 2
-  p <- p.adjust(p, method = "bonferroni", n = length(x))
+  p <- p.adjust(p, method = "bonferroni", n = N)
   p00 <- c(0.5, 0.5)
   p11 <- c(a, b) / n
   p0 <- p00[1]
@@ -54,7 +54,8 @@ goodnessOfFitTest <- function(input, output, session, tab) {
   })
   
   test <- reactive({
-    chi <- chisq.test(tab())
+    x <- tab()
+    chi <- chisq.test(x)
     print(chi)
     
     P0 <- rep(1/length(x), times = length(x))  # Expected ratio
@@ -68,7 +69,7 @@ goodnessOfFitTest <- function(input, output, session, tab) {
     for (i in 1:length(chi$observed)) {
       for (j in 1:length(chi$observed)) {
         if (i <= j) {next}
-        a <- effect_size(chi$observed[[i]], chi$observed[[j]])
+        a <- effect_size(chi$observed[[i]], chi$observed[[j]], N = length(x))
         cat(names(x)[j], "vs", names(x)[i], ":", "z =", sprintf("%.3f", a$z), ",",
             "p =", sprintf("%.3f", a$p),
             ",", "Effect size g =", a$ESg, "\n"
