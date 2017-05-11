@@ -14,7 +14,7 @@ source("testOfIndependence.R")
 
 shinyUI(bootstrapPage(
   
-  headerPanel("Chi-square Test"),
+  headerPanel("Chi-squared Test"),
   
   ########## Adding loading message #########
   
