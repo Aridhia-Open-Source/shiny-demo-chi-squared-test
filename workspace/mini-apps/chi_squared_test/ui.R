@@ -39,7 +39,7 @@ shinyUI(bootstrapPage(
   
   ########## Added up untill here ##########
   
-  mainPanel(
+  mainPanel(width = 12,
     tabsetPanel(position = "left", selected = "Test of Independence (Tabulated data)",
                 tabPanel("Test of goodness of fit (Raw data)",
                          h2("Test of goodness of fit (Raw data)"),
