@@ -11,6 +11,7 @@ source("aceReadCsv.R")
 source("goodnessOfFitTest.R")
 source("printSessionInfo.R")
 source("testOfIndependence.R")
+source("documentation_ui.R")
 
 shinyUI(bootstrapPage(
   
@@ -20,7 +21,6 @@ shinyUI(bootstrapPage(
   
   tags$head(tags$style(type="text/css", "
                        #loadmessage {
-                       position: fixed;
                        top: 0px;
                        left: 0px;
                        width: 100%;
@@ -40,7 +40,7 @@ shinyUI(bootstrapPage(
   ########## Added up untill here ##########
   
   mainPanel(width = 12,
-    tabsetPanel(position = "left", selected = "Test of Independence (Tabulated data)",
+    tabsetPanel(documentation_tab(),
                 tabPanel("Test of goodness of fit (Raw data)",
                          h2("Test of goodness of fit (Raw data)"),
                          h4("One nominal variable"),
