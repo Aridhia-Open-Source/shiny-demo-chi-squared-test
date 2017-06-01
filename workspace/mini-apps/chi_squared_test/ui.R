@@ -16,28 +16,7 @@ source("documentation_ui.R")
 shinyUI(bootstrapPage(
   
   headerPanel("Chi-squared Test"),
-  
-  ########## Adding loading message #########
-  
-  tags$head(tags$style(type="text/css", "
-                       #loadmessage {
-                       top: 0px;
-                       left: 0px;
-                       width: 100%;
-                       padding: 10px 0px 10px 0px;
-                       text-align: center;
-                       font-weight: bold;
-                       font-size: 100%;
-                       color: #000000;
-                       background-color: #CCFF66;
-                       z-index: 105;
-                       }
-                       ")),
-  
-  conditionalPanel(condition="$('html').hasClass('shiny-busy')",
-                   tags$div("Loading...",id="loadmessage")),
-  
-  ########## Added up untill here ##########
+
   
   mainPanel(width = 12,
     tabsetPanel(documentation_tab(),
