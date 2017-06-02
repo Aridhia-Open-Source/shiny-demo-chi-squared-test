@@ -38,14 +38,22 @@ goodnessOfFitTestUI <- function(id) {
     br(),
     h3("Test result"),
     verbatimTextOutput(ns("test")),
-    br(),
+    br()
+  )
+}
+
+goodnessOfFitTestPlotUI <- function(id) {
+  ns <- NS(id)
+  tagList(
     h3("Plot"),
     plotOutput(ns("plot"))
   )
 }
 
 goodnessOfFitTest <- function(input, output, session, tab) {
-  
+  observe({
+  req(!is.na(tab()))
+  })
   output$contingency_table <- renderPrint({
     n <- sum(tab())
     x <- c(tab(), Sum=n)

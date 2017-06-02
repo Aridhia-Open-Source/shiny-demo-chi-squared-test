@@ -13,7 +13,7 @@ toi_pplot <- function(m) {
   colnames(zu) <- colnames(m)
   
   par(mar=c(5,6,2,4))
-  barplot(t(zu), hor=1, las=1, xlab="Percentage", col=gray.colors(nr))
+  barplot(t(zu), hor=1, las=1, xlab="Proportion", col=gray.colors(nr))
   legend("bottomright", legend=colnames(zu), fill=gray.colors(nc))
 }
 
@@ -111,11 +111,23 @@ testOfIndependenceUI <- function(id) {
     verbatimTextOutput(ns("contingency_table")),
     br(),
     h3("Test result"),
-    verbatimTextOutput(ns("test")),
-    br(),
+    verbatimTextOutput(ns("test"))
+  )
+}
+
+testOfIndependencePlotsUI <- function(id) {
+  ns <- NS(id)
+  
+  tagList(
     h3("Plots"),
-    plotOutput(ns("pplot")),
-    plotOutput(ns("mplot"), height = "550px")
+    fluidRow(
+      column(6,
+             plotOutput(ns("pplot"))
+             ),
+      column(6,
+             plotOutput(ns("mplot"))
+             )
+    )
   )
 }
 
@@ -197,7 +209,7 @@ testOfIndependence <- function(input, output, session, m) {
   })
   
   output$mplot <- renderPlot({
-    mosaic(m(), gp = shading_max, main = "Mosaic plot")
+    mosaic(m(), gp = shading_max)
   })
   
 }
