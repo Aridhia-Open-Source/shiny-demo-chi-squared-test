@@ -13,7 +13,7 @@ toi_pplot <- function(m) {
   colnames(zu) <- colnames(m)
   
   par(mar=c(5,6,2,4))
-  barplot(t(zu), hor=1, las=1, xlab="Percentage", col=gray.colors(nr))
+  barplot(t(zu), hor=1, las=1, xlab="Proportion", col=gray.colors(nr))
   legend("bottomright", legend=colnames(zu), fill=gray.colors(nc))
 }
 

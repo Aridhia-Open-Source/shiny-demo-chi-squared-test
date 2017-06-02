@@ -13,7 +13,7 @@ server <- function(input, output, session) {
   dat <- df_gof$data
   # Pick the resulting variable
   res <-
-    callModule(chooseSelectedColumn, "choose_column_gof", dat, label = "Pick variable")
+    callModule(chooseSelectedColumn, "choose_column_gof", dat, label = "Pick a Nominal Variable")
   
   ####FROM TABLE
   dataFromTable_gof <- reactive({
@@ -55,11 +55,11 @@ server <- function(input, output, session) {
   dat_toi <- df_toi$data
   # Pick the resulting variable
   res_toi <-
-    callModule(chooseSelectedColumn, "choose_column_toi", dat_toi, label = "Pick variable")
+    callModule(chooseSelectedColumn, "choose_column_toi", dat_toi, label = "Pick 1st Nominal Variable")
   
   
   res2_toi <-
-    callModule(chooseSelectedColumn, "choose_column2_toi", dat_toi, label = "Pick 2nd variable")
+    callModule(chooseSelectedColumn, "choose_column2_toi", dat_toi, label = "Pick 2nd Nominal variable")
   
   
   val_toi <-

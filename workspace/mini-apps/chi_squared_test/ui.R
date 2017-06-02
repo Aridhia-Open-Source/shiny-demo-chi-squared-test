@@ -30,25 +30,26 @@ shinyUI(bootstrapPage(
             tabsetPanel(
               documentation_tab(),
               tabPanel(
-                "Test of goodness of fit",
+                "Test of Goodness of Fit",
+                tags$div(class = "tab", style = "margin-top: 15px;"),
                 radioButtons(
                   "dsSelect",
-                  "Select data source",
-                  choices = c("data", "raw", "tabular"),
+                  "Select Data Source",
+                  choices = c("workspace", "raw", "tabular"),
                   selected = "raw",
                   inline = T
                 ),
                 conditionalPanel(
-                  condition = "input['dsSelect'] == 'data'",
+                  condition = "input['dsSelect'] == 'workspace'",
                   fluidRow(sidebarLayout(
                     sidebarPanel(
-                      h2("Test of goodness of fit (From data source source)"),
+                      h2("Test of Goodness of Fit (Workspace Data)"),
                       xap.chooseDataTableUI("choose_data_gof"),
                       chooseSelectedColumnUI("choose_column_gof"),
                       br()
                     ),
                     mainPanel(
-                      p('Please select dataset, then select variable'),
+                      p('Please select a data set, and then select a nominal variable:'),
                       goodnessOfFitTestPlotUI("gof_test_data")
                     )
                   )),
@@ -62,7 +63,7 @@ shinyUI(bootstrapPage(
                   condition = "input['dsSelect'] == 'raw'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of goodness of fit (Raw data)"),
+                      h2("Test of Goodness of Fit (Raw Data)"),
                       h4("One nominal variable"),
                       aceReadCsvUI(
                         "gof_raw",
@@ -92,7 +93,7 @@ shinyUI(bootstrapPage(
                   condition = "input['dsSelect'] == 'tabular'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of goodness of fit (Tabulated data)"),
+                      h2("Test of Goodness of Fit (Tabulated Data)"),
                       h4("One nominal variable"),
                       aceReadCsvUI("gof_tab", placeholder = "Japanese,Thai,Chinese\n18,24,48")
                     ),
@@ -106,18 +107,19 @@ shinyUI(bootstrapPage(
               ),
               tabPanel(
                 "Test of Independence",
+                tags$div(class = "tab", style = "margin-top: 15px;"),
                 radioButtons(
                   "dsSelect_toi",
-                  "Select data source",
-                  choices = c("data", "raw", "tabular"),
+                  "Select Data Source",
+                  choices = c("workspace", "raw", "tabular"),
                   selected = "raw",
                   inline = T
                 ),
                 conditionalPanel(
-                  condition = "input['dsSelect_toi'] == 'data'",
+                  condition = "input['dsSelect_toi'] == 'workspace'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of goodness of fit (From data source)"),
+                      h2("Test of Independence (Workspace Data)"),
                       xap.chooseDataTableUI("choose_data_toi"),
                       chooseSelectedColumnUI("choose_column_toi"),
                       chooseSelectedValueUI("choose_value_toi"),
@@ -126,7 +128,7 @@ shinyUI(bootstrapPage(
                     ),
                     mainPanel(
                       p(
-                        'Please select dataset, and then select 2 variables, and then select values of interest'
+                        'Please select a data set, and then select 2 nominal variables, and then select values of interest from those variables:'
                       ),
                       testOfIndependencePlotsUI("toi_test_data")
                     )
@@ -140,7 +142,7 @@ shinyUI(bootstrapPage(
                   condition = "input['dsSelect_toi'] == 'raw'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Independence (Raw data)"),
+                      h2("Test of Independence (Raw Data)"),
                       h4("Two or more than two nominal variables"),
                       aceReadCsvUI(
                         "toi_raw",
@@ -168,7 +170,7 @@ shinyUI(bootstrapPage(
                   condition = "input['dsSelect_toi'] == 'tabular'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Independence (Tabulated data)"),
+                      h2("Test of Independence (Tabulated Data)"),
                       h4("Two or more than two nominal variables"),
                       aceReadCsvUI("toi_tab", placeholder = ",No,Yes\nM,20,18\nW,8,24")
                     ),
