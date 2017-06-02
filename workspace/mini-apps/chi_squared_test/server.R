@@ -74,8 +74,14 @@ server <- function(input, output, session) {
     A <- val_toi()
     #Get V2
     B <- val2_toi()
+    #Find longest vector
+    l <- max(length(A),length(B))
+    #Make sure all are same length (Fill's with NA)
+    length(A) <- l
+    length(B) <- l
+    #Organise
     d <- data.frame(A, B)
-    
+    #Get table
     out <- table(d)
     return(out)
   })
