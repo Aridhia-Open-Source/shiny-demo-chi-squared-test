@@ -18,7 +18,7 @@ documentation_tab <- function() {
            p("To experiment with either goodness of fit or degree of independence of nominal variables, first click on the relevant tab. From there, in the ",
              strong("sidebar"), 
              " you may: "), 
-           br(), # ordered list
+            # ordered list
            tags$ol(
              tags$li("Use the  ", em("radio buttons "), 
                      "to select data either from the workspace, raw manual input or tabulated manual input. From the workspace option, the ", 
@@ -32,6 +32,9 @@ documentation_tab <- function() {
              tags$li("The plots will appear next to the sidebar, with a variety of statistical test outputs created further down the page.")
             
              ),
+           strong("When selecting variables, be sure to select NOMINAL variables only. If you select a numeric variable such as age, each category will have a count of 1,
+                  and the plots will not display correctly."),
+           br(),
            br(),
            p("The video below gives an overview on how to use the app:"),
            HTML('<iframe width="100%" height="500" src="//www.youtube.com/embed/rCDZzf4ragg" frameborder="0" allowfullscreen = "allowfullscreen"></iframe>'),
