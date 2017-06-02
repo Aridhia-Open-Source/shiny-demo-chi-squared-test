@@ -1,6 +1,8 @@
 
 
 
+
+
 xap.require("shiny",
             "shinyAce",
             "pwr",
@@ -16,11 +18,11 @@ source('chooseColumn.R')
 source('chooseValues.R')
 shinyUI(bootstrapPage(
   includeCSS("www/xapstyles.css"),
-  tags$head(
-    tags$style(HTML("
-                    .shiny-output-error { visibility: hidden; }
-                    "))
-    ),
+  tags$head(tags$style(
+    HTML("
+         .shiny-output-error { visibility: hidden; }
+         ")
+    )),
   headerPanel("Chi-squared Test"),
   
   
@@ -50,7 +52,10 @@ shinyUI(bootstrapPage(
                       goodnessOfFitTestPlotUI("gof_test_data")
                     )
                   )),
-                  fluidPage(goodnessOfFitTestUI("gof_test_data"))
+                  fluidPage(
+                    goodnessOfFitTestUI("gof_test_data"),
+                    printSessionInfoUI("info1")
+                  )
                   
                 ),
                 conditionalPanel(
@@ -80,7 +85,7 @@ shinyUI(bootstrapPage(
                   ),
                   fluidPage(
                     goodnessOfFitTestUI("gof_test_raw"),
-                    printSessionInfoUI("info1")
+                    printSessionInfoUI("info2")
                   )
                 ),
                 conditionalPanel(
@@ -95,7 +100,7 @@ shinyUI(bootstrapPage(
                   ),
                   fluidPage(
                     goodnessOfFitTestUI("gof_test_tab"),
-                    printSessionInfoUI("info2")
+                    printSessionInfoUI("info3")
                   )
                 )
               ),
@@ -126,7 +131,10 @@ shinyUI(bootstrapPage(
                       testOfIndependencePlotsUI("toi_test_data")
                     )
                   ),
-                  fluidPage(testOfIndependenceUI("toi_test_data"))
+                  fluidPage(
+                    testOfIndependenceUI("toi_test_data"),
+                    printSessionInfoUI("info4")
+                  )
                 ),
                 conditionalPanel(
                   condition = "input['dsSelect_toi'] == 'raw'",
@@ -153,7 +161,7 @@ shinyUI(bootstrapPage(
                   ),
                   fluidPage(
                     testOfIndependenceUI("toi_test_raw"),
-                    printSessionInfoUI("info3")
+                    printSessionInfoUI("info5")
                   )
                 ),
                 conditionalPanel(
@@ -168,9 +176,9 @@ shinyUI(bootstrapPage(
                   ),
                   fluidPage(
                     testOfIndependenceUI("toi_test_tab"),
-                    printSessionInfoUI("info4")
+                    printSessionInfoUI("info6")
                   )
                 )
               )
             ))
-))
+    ))
