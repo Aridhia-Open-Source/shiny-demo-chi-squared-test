@@ -38,7 +38,13 @@ goodnessOfFitTestUI <- function(id) {
     br(),
     h3("Test result"),
     verbatimTextOutput(ns("test")),
-    br(),
+    br()
+  )
+}
+
+goodnessOfFitTestPlotUI <- function(id) {
+  ns <- NS(id)
+  tagList(
     h3("Plot"),
     plotOutput(ns("plot"))
   )

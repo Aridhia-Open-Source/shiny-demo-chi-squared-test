@@ -33,6 +33,7 @@ shinyUI(bootstrapPage(
                 ),
                 conditionalPanel(
                   condition = "input['dsSelect'] == 'data'",
+                  fluidRow(
                   sidebarLayout(
                     sidebarPanel(
                   h2("Test of goodness of fit (From data source source)"),
@@ -40,7 +41,9 @@ shinyUI(bootstrapPage(
                   chooseSelectedColumnUI("choose_column_gof"),
                   br()
                     ),
-                  mainPanel(p('Please select dataset, then select variable'))
+                  mainPanel(p('Please select dataset, then select variable'),
+                            goodnessOfFitTestPlotUI("gof_test_data"))
+                  )
                   ),
                   fluidPage(
                   goodnessOfFitTestUI("gof_test_data")
@@ -53,10 +56,7 @@ shinyUI(bootstrapPage(
                     sidebarPanel(
                   h2("Test of goodness of fit (Raw data)"),
                   h4("One nominal variable"),
-                  
-                  br()
-                  ),
-                  mainPanel(aceReadCsvUI(
+                  aceReadCsvUI(
                     "gof_raw",
                     paste0(
                       "L1\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\nJapanese\n",
@@ -71,7 +71,11 @@ shinyUI(bootstrapPage(
                       "Chinese\nChinese\nChinese\nChinese\nChinese"
                     )
                   )
-                  )
+                  ),
+                  mainPanel(
+                    goodnessOfFitTestPlotUI("gof_test_raw")
+                    )
+                  
                   ),
                   fluidPage(
                   goodnessOfFitTestUI("gof_test_raw"),
@@ -83,10 +87,11 @@ shinyUI(bootstrapPage(
                   sidebarLayout(
                     sidebarPanel(
                   h2("Test of goodness of fit (Tabulated data)"),
-                  h4("One nominal variable")
+                  h4("One nominal variable"),
+                  aceReadCsvUI("gof_tab", placeholder = "Japanese,Thai,Chinese\n18,24,48")
                   ),
                   mainPanel(
-                  aceReadCsvUI("gof_tab", placeholder = "Japanese,Thai,Chinese\n18,24,48")
+                    goodnessOfFitTestPlotUI("gof_test_tab")
                   )
                   ),
                   fluidPage(
