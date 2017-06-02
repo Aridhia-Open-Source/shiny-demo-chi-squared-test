@@ -16,6 +16,11 @@ source('chooseColumn.R')
 source('chooseValues.R')
 shinyUI(bootstrapPage(
   includeCSS("www/xapstyles.css"),
+  tags$head(
+    tags$style(HTML("
+                    .shiny-output-error { visibility: hidden; }
+                    "))
+    ),
   headerPanel("Chi-squared Test"),
   
   
