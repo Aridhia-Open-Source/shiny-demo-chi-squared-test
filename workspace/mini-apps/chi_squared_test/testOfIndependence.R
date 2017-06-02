@@ -111,11 +111,23 @@ testOfIndependenceUI <- function(id) {
     verbatimTextOutput(ns("contingency_table")),
     br(),
     h3("Test result"),
-    verbatimTextOutput(ns("test")),
-    br(),
+    verbatimTextOutput(ns("test"))
+  )
+}
+
+testOfIndependencePlotsUI <- function(id) {
+  ns <- NS(id)
+  
+  tagList(
     h3("Plots"),
-    plotOutput(ns("pplot")),
-    plotOutput(ns("mplot"), height = "550px")
+    fluidRow(
+      column(6,
+             plotOutput(ns("pplot"))
+             ),
+      column(6,
+             plotOutput(ns("mplot"))
+             )
+    )
   )
 }
 
@@ -197,7 +209,7 @@ testOfIndependence <- function(input, output, session, m) {
   })
   
   output$mplot <- renderPlot({
-    mosaic(m(), gp = shading_max,shade = TRUE, main = "Mosaic plot")
+    mosaic(m(), gp = shading_max)
   })
   
 }
