@@ -14,6 +14,7 @@ source("documentation_ui.R")
 source('chooseColumn.R')
 source('chooseValues.R')
 shinyUI(bootstrapPage(
+  includeCSS("www/xapstyles.css"),
   headerPanel("Chi-squared Test"),
 
   

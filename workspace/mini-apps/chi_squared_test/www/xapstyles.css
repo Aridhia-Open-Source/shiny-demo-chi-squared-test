@@ -1,0 +1,48 @@
+@import '/assets/application-8b0cd7e75bb6e10c50ad7d51865ee367.css';
+body {
+    position: relative;
+}
+.well {
+    background-color: rgb(235, 245, 247);
+    border-radius: 3px;
+    box-shadow: none;
+}
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    height: 30px !important
+}
+h1 {
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    font-size: 25px;
+    margin: 25px auto;
+}
+h2 {
+    font-size: 20px;
+    margin: 15px 0;
+}
+h3,
+h4 {
+    font-size: 18px;
+    margin-top: 15px;
+}
+h4 {
+    color: rgba(0, 0, 0, .5)
+}
+ol {
+    list-style-type: decimal;
+    margin: 0 0 10px 25px;
+}
