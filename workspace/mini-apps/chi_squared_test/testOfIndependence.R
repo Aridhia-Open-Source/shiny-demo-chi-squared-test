@@ -197,7 +197,7 @@ testOfIndependence <- function(input, output, session, m) {
   })
   
   output$mplot <- renderPlot({
-    mosaic(m(), gp = shading_max, main = "Mosaic plot")
+    mosaic(m(), gp = shading_max,shade = TRUE, main = "Mosaic plot")
   })
   
 }

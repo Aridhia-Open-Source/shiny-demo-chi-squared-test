@@ -1,6 +1,27 @@
 
 
 server <- function(input, output, session) {
+  
+  #----------------------------------------------------
+  # 1. Test of goodness of fit (from Data source)
+  #----------------------------------------------------
+  
+  ####FROM DATABASE
+  df_gof <- callModule(xap.chooseDataTable, "choose_data_gof")
+  dat <- df_gof$data
+  # Pick the resulting variable
+  res <-
+    callModule(chooseSelectedColumn, "choose_column_gof", dat, label = "Pick variable")
+  
+  ####FROM TABLE
+  dataFromTable_gof <- reactive({
+    t <- table(res())
+    x <- sort(t, decreasing = T)[1:5]
+    x <- x[!is.na(names(x))]
+    return(x)
+  })
+  callModule(goodnessOfFitTest, "gof_test_data", dataFromTable_gof)
+  
   #----------------------------------------------------
   # 1. Test of goodness of fit (Raw data)
   #----------------------------------------------------
@@ -19,10 +40,45 @@ server <- function(input, output, session) {
   tab_d2 <- reactive({
     unlist(d2())
   })
-  
   callModule(goodnessOfFitTest, "gof_test_tab", tab_d2)
   callModule(printSessionInfo, "info2")
   
+  
+  #----------------------------------------------------
+  # 3. Test of independence (from Data source)
+  #----------------------------------------------------
+  
+  ####FROM DATABASE
+  df_toi <- callModule(xap.chooseDataTable, "choose_data_toi")
+  dat_toi <- df_toi$data
+  # Pick the resulting variable
+  res_toi <-
+    callModule(chooseSelectedColumn, "choose_column_toi", dat_toi, label = "Pick variable")
+
+  
+  res2_toi <-
+    callModule(chooseSelectedColumn, "choose_column2_toi", dat_toi, label = "Pick 2nd variable")
+  
+  
+  val_toi <-
+    callModule(chooseSelectedValue, "choose_value_toi", res_toi,label = "Pick set of values")
+  
+  val2_toi <-
+    callModule(chooseSelectedValue, "choose_value2_toi", res2_toi, label = "Pick 2nd set of values")
+
+  ####FROM DATABASE
+  dataFromTable_toi <- reactive({
+    #Get V1
+    A <- val_toi()
+    #Get V2
+    B <- val2_toi()
+    d <-data.frame(A,B)
+
+    out <- table(d)
+    return(out)
+  })
+  
+  callModule(testOfIndependence, "toi_test_data", dataFromTable_toi)
   #----------------------------------------------------
   # 3. Test of Independence (Raw data)
   #----------------------------------------------------

@@ -11,7 +11,8 @@ source("goodnessOfFitTest.R")
 source("printSessionInfo.R")
 source("testOfIndependence.R")
 source("documentation_ui.R")
-
+source('chooseColumn.R')
+source('chooseValues.R')
 shinyUI(bootstrapPage(
   headerPanel("Chi-squared Test"),
   
@@ -24,9 +25,17 @@ shinyUI(bootstrapPage(
                 radioButtons(
                   "dsSelect",
                   "Select data source",
-                  choices = c("raw", "tabular"),
+                  choices = c("data","raw", "tabular"),
                   selected = "raw",
                   inline = T
+                ),
+                conditionalPanel(
+                  condition = "input['dsSelect'] == 'data'",
+                  h2("Test of goodness of fit (From data source source)"),
+                  xap.chooseDataTableUI("choose_data_gof"),
+                  chooseSelectedColumnUI("choose_column_gof"),
+                  br(),
+                  goodnessOfFitTestUI("gof_test_data")
                 ),
                 conditionalPanel(
                   condition = "input['dsSelect'] == 'raw'",
@@ -66,9 +75,20 @@ shinyUI(bootstrapPage(
                 radioButtons(
                   "dsSelect_toi",
                   "Select data source",
-                  choices = c("raw", "tabular"),
+                  choices = c("data","raw", "tabular"),
                   selected = "raw",
                   inline = T
+                ),
+                conditionalPanel(
+                  condition = "input['dsSelect_toi'] == 'data'",
+                  h2("Test of goodness of fit (From data source)"),
+                  xap.chooseDataTableUI("choose_data_toi"),
+                  chooseSelectedColumnUI("choose_column_toi"),
+                  chooseSelectedValueUI("choose_value_toi"),
+                  chooseSelectedColumnUI("choose_column2_toi"),
+                  chooseSelectedValueUI("choose_value2_toi"),
+                  br(),
+                  testOfIndependenceUI("toi_test_data")
                 ),
                 conditionalPanel(
                   condition = "input['dsSelect_toi'] == 'raw'",
