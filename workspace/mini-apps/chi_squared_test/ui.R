@@ -1,7 +1,14 @@
-
-
-
-
+# attempt to load xapModules
+l <-  xap.require.or.install("xapModules")
+# if null then package was loaded from library
+if (!is.null(l)) {
+  # if FALSE then package was not found in repo
+  if (!l) {
+    # attempt to install from packages binaries included with the app
+    pkg <- list.files("package_binaries", pattern = "xapModules*")
+    utils::install.packages(file.path("package_binaries", pkg), repos = NULL)
+  }
+}
 
 xap.require("shiny",
             "shinyAce",
@@ -17,7 +24,7 @@ source("documentation_ui.R")
 source('chooseColumn.R')
 source('chooseValues.R')
 shinyUI(bootstrapPage(
-  includeCSS("www/xapstyles.css"),
+  theme = "xapstyles.css",
   tags$head(tags$style(
     HTML("
          .shiny-output-error { visibility: hidden; }
@@ -41,18 +48,17 @@ shinyUI(bootstrapPage(
                 ),
                 conditionalPanel(
                   condition = "input['dsSelect'] == 'workspace'",
-                  fluidRow(sidebarLayout(
+                  sidebarLayout(
                     sidebarPanel(
                       h2("Test of Goodness of Fit (Workspace Data)"),
                       xap.chooseDataTableUI("choose_data_gof"),
-                      chooseSelectedColumnUI("choose_column_gof"),
-                      br()
+                      chooseSelectedColumnUI("choose_column_gof")
                     ),
                     mainPanel(
                       p('Please select a data set, and then select a nominal variable:'),
                       goodnessOfFitTestPlotUI("gof_test_data")
                     )
-                  )),
+                  ),
                   fluidPage(
                     goodnessOfFitTestUI("gof_test_data"),
                     printSessionInfoUI("info1")
