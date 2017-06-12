@@ -24,7 +24,9 @@ documentation_tab <- function() {
            tags$ol(
              tags$li("In the ", strong("Goodness of Fit tab, "), 
                      "use the drop-down menu to pick a first and second nominal variable, then select the values of interest which appear below the 
-                      drop-down menus for each. ")
+                      drop-down menus for each. "),
+             tags$li("In the ", strong("Test of Independence tab,"), "use the drop-down menu to pick a first and second nominal variable, then 
+                     select the values of interest which appear below the drop-down menus for each.")
            ),
            br(),            
              
