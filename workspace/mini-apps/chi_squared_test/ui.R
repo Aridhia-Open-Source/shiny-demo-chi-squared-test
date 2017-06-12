@@ -23,7 +23,7 @@ source("testOfIndependence.R")
 source("documentation_ui.R")
 source('chooseColumn.R')
 source('chooseValues.R')
-shinyUI(bootstrapPage(
+shinyUI(bootstrapPage(fluidPage(
   theme = "xapstyles.css",
   tags$head(tags$style(
     HTML("
@@ -38,6 +38,7 @@ shinyUI(bootstrapPage(
               
               tabPanel(
                 "Test of Goodness of Fit",
+                fluidPage(
                 tags$div(class = "tab", style = "margin-top: 15px;"),
                 radioButtons(
                   "dsSelect",
@@ -110,9 +111,10 @@ shinyUI(bootstrapPage(
                     printSessionInfoUI("info3")
                   )
                 )
-              ),
+              )),
               tabPanel(
                 "Test of Independence",
+                fluidPage(
                 tags$div(class = "tab", style = "margin-top: 15px;"),
                 radioButtons(
                   "dsSelect_toi",
@@ -187,7 +189,7 @@ shinyUI(bootstrapPage(
                     printSessionInfoUI("info6")
                   )
                 )
-              ),
+              )),
               documentation_tab()
             ))
-    ))
+    )))
