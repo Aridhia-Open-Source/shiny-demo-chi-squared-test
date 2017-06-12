@@ -35,7 +35,7 @@ shinyUI(bootstrapPage(
   
   mainPanel(width = 12,
             tabsetPanel(
-              documentation_tab(),
+              
               tabPanel(
                 "Test of Goodness of Fit",
                 tags$div(class = "tab", style = "margin-top: 15px;"),
@@ -43,7 +43,7 @@ shinyUI(bootstrapPage(
                   "dsSelect",
                   "Select Data Source",
                   choices = c("workspace", "raw", "tabular"),
-                  selected = "raw",
+                  selected = "workspace",
                   inline = T
                 ),
                 conditionalPanel(
@@ -118,7 +118,7 @@ shinyUI(bootstrapPage(
                   "dsSelect_toi",
                   "Select Data Source",
                   choices = c("workspace", "raw", "tabular"),
-                  selected = "raw",
+                  selected = "workspace",
                   inline = T
                 ),
                 conditionalPanel(
@@ -187,6 +187,7 @@ shinyUI(bootstrapPage(
                     printSessionInfoUI("info6")
                   )
                 )
-              )
+              ),
+              documentation_tab()
             ))
     ))
