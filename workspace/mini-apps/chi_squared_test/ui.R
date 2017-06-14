@@ -42,7 +42,7 @@ shinyUI(bootstrapPage(fluidPage(
                 tags$div(class = "tab", style = "margin-top: 15px;"),
                 radioButtons(
                   "dsSelect",
-                  "Select Data Source",
+                  "Select data source",
                   choices = c("workspace", "raw", "tabular"),
                   selected = "workspace",
                   inline = T
@@ -51,7 +51,7 @@ shinyUI(bootstrapPage(fluidPage(
                   condition = "input['dsSelect'] == 'workspace'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Goodness of Fit (Workspace Data)"),
+                      h2("Test of Goodness of Fit (workspace data)"),
                       xap.chooseDataTableUI("choose_data_gof"),
                       chooseSelectedColumnUI("choose_column_gof")
                     ),
@@ -70,7 +70,7 @@ shinyUI(bootstrapPage(fluidPage(
                   condition = "input['dsSelect'] == 'raw'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Goodness of Fit (Raw Data)"),
+                      h2("Test of Goodness of Fit (raw data)"),
                       h4("One nominal variable"),
                       aceReadCsvUI(
                         "gof_raw",
@@ -100,7 +100,7 @@ shinyUI(bootstrapPage(fluidPage(
                   condition = "input['dsSelect'] == 'tabular'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Goodness of Fit (Tabulated Data)"),
+                      h2("Test of Goodness of Fit (tabulated data)"),
                       h4("One nominal variable"),
                       aceReadCsvUI("gof_tab", placeholder = "Japanese,Thai,Chinese\n18,24,48")
                     ),
@@ -118,7 +118,7 @@ shinyUI(bootstrapPage(fluidPage(
                 tags$div(class = "tab", style = "margin-top: 15px;"),
                 radioButtons(
                   "dsSelect_toi",
-                  "Select Data Source",
+                  "Select data source",
                   choices = c("workspace", "raw", "tabular"),
                   selected = "workspace",
                   inline = T
@@ -127,7 +127,7 @@ shinyUI(bootstrapPage(fluidPage(
                   condition = "input['dsSelect_toi'] == 'workspace'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Independence (Workspace Data)"),
+                      h2("Test of Independence (workspace data)"),
                       xap.chooseDataTableUI("choose_data_toi"),
                       chooseSelectedColumnUI("choose_column_toi"),
                       chooseSelectedValueUI("choose_value_toi"),
@@ -150,7 +150,7 @@ shinyUI(bootstrapPage(fluidPage(
                   condition = "input['dsSelect_toi'] == 'raw'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Independence (Raw Data)"),
+                      h2("Test of Independence (raw data)"),
                       h4("Two or more than two nominal variables"),
                       aceReadCsvUI(
                         "toi_raw",
@@ -178,7 +178,7 @@ shinyUI(bootstrapPage(fluidPage(
                   condition = "input['dsSelect_toi'] == 'tabular'",
                   sidebarLayout(
                     sidebarPanel(
-                      h2("Test of Independence (Tabulated Data)"),
+                      h2("Test of Independence (tabulated data)"),
                       h4("Two or more than two nominal variables"),
                       aceReadCsvUI("toi_tab", placeholder = ",No,Yes\nM,20,18\nW,8,24")
                     ),
