@@ -2,7 +2,6 @@
 
 
 
-
 server <- function(input, output, session) {
   #----------------------------------------------------
   # 1. Test of goodness of fit (from Data source)

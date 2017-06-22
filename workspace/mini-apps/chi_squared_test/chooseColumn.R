@@ -1,4 +1,3 @@
-
 chooseColumnUI <- function(id) {
   ns <- NS(id)
   

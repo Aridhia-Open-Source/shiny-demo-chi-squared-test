@@ -1,4 +1,3 @@
-
 printSessionInfoUI <- function(id) {
   ns <- NS(id)
   

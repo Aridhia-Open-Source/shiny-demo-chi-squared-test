@@ -1,4 +1,3 @@
-
 # For CSV files only
 
 aceReadCsvUI <- function(id, placeholder = "\n") {
@@ -9,7 +8,7 @@ aceReadCsvUI <- function(id, placeholder = "\n") {
       Empty values and the string NA will be interpreted as NA"),
     aceEditor(ns("text"), value = placeholder,
               mode = "r", theme = "cobalt")
-  )
+    )
 }
 
 aceReadCsv <- function(input, output, session) {

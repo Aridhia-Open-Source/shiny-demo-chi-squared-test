@@ -1,4 +1,3 @@
-
 chooseValueUI <- function(id) {
   ns <- NS(id)
   
@@ -16,7 +15,7 @@ chooseValue <- function(input, output, session, data, label = "Select a Value:")
   output$choose_value_ui <- renderUI({
     v <- values()
     selectizeInput(ns("choose_value"), label, choices = v, multiple = T,
-                selected = v[1:5])
+                   selected = v[1:5])
     
   })
   

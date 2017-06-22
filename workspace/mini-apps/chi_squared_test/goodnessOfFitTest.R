@@ -1,5 +1,4 @@
 
-
 effect_size <- function(a, b, N) {
   n <- a + b
   z <- (abs(a - b) - 1) / sqrt(n)
@@ -52,12 +51,12 @@ goodnessOfFitTestPlotUI <- function(id) {
 
 goodnessOfFitTest <- function(input, output, session, tab) {
   observe({
-  req(!is.na(tab()))
+    req(!is.na(tab()))
   })
   output$contingency_table <- renderPrint({
     n <- sum(tab())
     x <- c(tab(), Sum=n)
-  
+    
     print(x)
   })
   

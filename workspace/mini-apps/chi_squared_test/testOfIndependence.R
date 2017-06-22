@@ -1,5 +1,4 @@
 
-
 toi_pplot <- function(m) {
   nr <- nrow(m)
   nc <- ncol(m)
@@ -123,10 +122,10 @@ testOfIndependencePlotsUI <- function(id) {
     fluidRow(
       column(6,
              plotOutput(ns("pplot"))
-             ),
+      ),
       column(6,
              plotOutput(ns("mplot"))
-             )
+      )
     )
   )
 }
