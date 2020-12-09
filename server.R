@@ -1,5 +1,7 @@
 
-
+######################
+####### SERVER #######
+######################
 
 
 server <- function(input, output, session) {
@@ -7,8 +9,8 @@ server <- function(input, output, session) {
   # 1. Test of goodness of fit (from Data source)
   #----------------------------------------------------
   
-  ####FROM DATABASE
-  df_gof <- callModule(xap.chooseDataTable, "choose_data_gof")
+  # Choose data from file
+  df_gof <- callModule(chooseDataTable, "choose_data_gof")
   dat <- df_gof$data
   # Pick the resulting variable
   res <-
@@ -50,7 +52,7 @@ server <- function(input, output, session) {
   #----------------------------------------------------
   
   ####FROM DATABASE
-  df_toi <- callModule(xap.chooseDataTable, "choose_data_toi")
+  df_toi <- callModule(chooseDataTable, "choose_data_toi")
   dat_toi <- df_toi$data
   # Pick the resulting variable
   res_toi <-
