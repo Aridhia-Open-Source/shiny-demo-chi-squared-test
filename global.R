@@ -16,3 +16,4 @@ for (file in list.files("code", full.names = TRUE)){
 
 
 source("config.R")
+source("dependencies.R")

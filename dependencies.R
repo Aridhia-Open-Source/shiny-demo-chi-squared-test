@@ -7,6 +7,13 @@ packages <- c("shiny",
 
 
 # Install the packages if not installed
-if (!require(packages)){
-  install.packages(packages)
+package_install <- function(x){
+  for (i in x){
+    # Check if package is installed
+    if (!require(i, character.only = TRUE)){
+      install.packages(i)
+    }
+  }
 }
+
+package_install(packages)
