@@ -22,7 +22,7 @@ git clone https://github.com/aridhia/demo-chi-squared-test
 
 Open the .Rproj file in RStudio and use `runApp()` to start the app.
 
-### Deployin to the workspace
+### Deploying to the workspace
 
 1. Create a new mini-app in the workspace called "chi-squared-test"" and delete the folder created for it
 2. Download this GitHub repo as a .ZIP file, or zip all the files
