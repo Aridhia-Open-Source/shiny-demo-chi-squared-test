@@ -1,10 +1,10 @@
 # CHI-SQUARED TEST
 
-**Chi-squared test** is u 
+**Chi-squared test** is the most popular discrete data hypothesis testing method. It consists of the goodness of fit and the test of independence.    
 
 The **Chi-squared goodness of fit test** is a non-parametric test that is used to determine whether there is a statistically significant difference between the expected frequencies and the observed frequencies in one or more categories of a contingency table.
 
-The **Chi-squared test of independence test** is used to determinate if there's a significant relationship between two nominal or categorical variables. The frequency of each category for one nominal variable is compared across the categories of the second variable.
+The **Chi-squared test of independence** is used to determinate if there's a significant relationship between two nominal or categorical variables. The frequency of each category for one nominal variable is compared across the categories of the second variable.
 
 ## About the Chi-squared test app
 
