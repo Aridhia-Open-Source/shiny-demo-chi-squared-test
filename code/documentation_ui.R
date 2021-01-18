@@ -33,7 +33,7 @@ documentation_tab <- function() {
                        h3("Walkthrough video"),
                        
                        
-                       HTML('<iframe width="100%" height="300" src="//www.youtube.com/embed/U_0D-47jv-I?rel=0" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'),
+                       tags$video(src="chi-squared.mp4", type = "video/mp4", width="100%", height = "350", frameborder = "0", controls = NA),
                        p(class = "nb", "NB: This mini-app is for provided for demonstration purposes, is unsupported and is utilised at user's risk. If you plan to use this mini-app to inform your study, please review the code and ensure you are comfortable with the calculations made before proceeding."
                        ))
                      
