@@ -8,9 +8,14 @@ The **Chi-squared test of independence** is used to determinate if there's a sig
 
 ## About the Chi-squared test app
 
-Has two tabs:
-1. Goodness of fit
-2. Test of independence
+Click on the relevant tab for the test you wish to perform. From there, in the left-hand sidebar, you can select which data source to use (file, raw or tabular). When selecting variables, be sure to select NOMINAL variables only. If numeric variable such as age are selected, each category will have a count of 1, and outputs will not display correctly and will not make sense.
+
+The two types of Chi-squared tests you can perform on this app are located in two different tabs:
+
+1. Goodness of fit. Use the drop-down menu to pick a first and second nominal variable, then select the values of interest which appear below the drop-down menus for each.
+2. Test of independence. Use the drop-down menu to pick a first and second nominal variable, then select the values of interest which appear below the drop-down menus for each.
+
+The examplar files used in this mini-app are located in the 'data' folder, you can save you own files there to use them in the mini-app.
 
 ### Checkout and run
 
