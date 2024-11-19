@@ -22,7 +22,7 @@ The examplar files used in this mini-app are located in the 'data' folder, you c
 You can clone this repository by using the command:
 
 ```
-git clone https://github.com/aridhia/demo-chi-squared-test
+git clone https://github.com/Aridhia-Open-Source/shiny-demo-chi-squared-test
 ```
 
 Open the .Rproj file in RStudio and use `runApp()` to start the app.
