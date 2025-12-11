@@ -30,7 +30,7 @@ Open the .Rproj file in RStudio and use `runApp()` to start the app.
 ### Deploying to the workspace
 
 1. Download this GitHub repo as a .zip file.
-2. Create a new blank Shiny app in your workspace called "chi-squared-test".
+2. Create a new blank R web app in your workspace called "chi-squared-test".
 3. Navigate to the `chi-squared-test` folder under "files".
 4. Delete the `app.R` file from the `chi-squared-test` folder. Make sure you keep the `.version` file!
 5. Upload the .zip file to the `chi-squared-test` folder.
